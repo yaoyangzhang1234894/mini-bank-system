@@ -1,0 +1,19 @@
+# 编译产物
+bank_server
+*.o
+*.exe
+
+# 数据库
+*.db
+*.sqlite
+
+# 依赖
+node_modules/
+
+# IDE
+.vscode/
+.idea/
+
+# 系统文件
+.DS_Store
+Thumbs.db
