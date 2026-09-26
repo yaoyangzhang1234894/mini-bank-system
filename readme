@@ -1,0 +1,114 @@
+Smart Banking System
+
+A full-stack banking system supporting concurrent transactions and transaction rollback. The backend is written in C++17 and provides a RESTful API; the frontend uses React to build interactive dashboards.
+
+GitHub: https://github.com/yaoyangzhang1234894/mini-bank-system
+
+---------------------------------------------------------------------------------------------------------------------------------
+
+## Technology Stack
+
+Backend: C++17, httplib, nlohmann/json
+
+Database: SQLite3
+
+Concurrency Control: std::mutex, std::atomic, std::thread
+
+Frontend: React, Vite, Tailwind CSS, Axios
+---------------------------------------------------------------------------------------------------------------------------------
+
+Core Functions
+
+Account Management: Create account, query account information, close account
+
+Deposit/Withdrawal: Supports balance verification, negative balance blocking, and account status checking
+
+Transfer: Supports transaction rollback; automatically restores the source account balance when a transfer fails
+
+Concurrency Control: Uses mutex to protect shared resources and atomic to count the number of transactions
+
+Transaction Log: Records the type, amount, and status of each transaction
+
+REST API: All functions are exposed via HTTP API; the frontend can call them across platforms.
+
+---------------------------------------------------------------------------------------------------------------------------------
+
+Technical Highlights
+
+Concurrency Security: Uses ‘std::mutex’ to protect account balances; ‘std::atomic’ counts total transactions to avoid race conditions.
+
+Transaction rollback: If a transfer fails to reach the target account, the source account balance is automatically restored to ensure data consistency.
+
+RAII and move semantics: ‘std::unique_ptr’ manages mutexes; the ‘Account’ class implements move construction and move assignment.
+
+Layered architecture: ‘Bank’ → ’Account‘ → ‘mydbms’ → SQLite, clear responsibilities, easy to extend.
+
+Front-end and back-end separation: The back-end provides a REST API, and the front-end calls it via Axios, resulting in a clear and maintainable structure.
+
+---------------------------------------------------------------------------------------------------------------------------------
+Project Structure
+
+Back-end (C++)
+
+- Account.h / Account.cpp — Account class, manages balance, username, and password; built-in mutex ensures concurrency safety.
+
+- Bank.h / Bank.cpp — Main bank logic, handles account management, deposits, withdrawals, and transfers; supports concurrent transaction simulation; triggers rollback when a transfer fails.
+
+- Transaction.h / Transaction.cpp — Transaction class, records transactions. ID, Type, Amount, Timestamp, and Status
+
+- mydbms.h / mydbms.cpp — SQLite wrapper layer, responsible for database and table creation, CRUD operations
+
+- server.cpp — HTTP server, based on httplib, providing REST API endpoints
+
+- main.cpp — Command-line entry point, demonstrating all core functions
+
+Frontend (React)
+
+- react/bank-frontend/ — The entire frontend project
+
+- src/App.jsx — Main interface, containing all page logic
+
+- src/api.js — Wraps Axios, responsible for communication with the backend
+
+- src/App.css — Styles
+
+
+---------------------------------------------------------------------------------------------------------------------------------
+How to Run
+
+Environment Requirements
+
+- C++ compiler (g++ 9+ or clang++ 10+)
+
+- Node.js 18+
+
+- SQLite3
+
+Backend
+
+cd v20260924
+g++ -std=c++17 -pthread. The backend runs at http://localhost:8080.
+
+The frontend is run as follows:
+
+cd v20260924/react/bank-frontend
+npm install
+npm run dev
+
+The frontend runs at http://localhost:5173.
+
+Open your browser and access http://localhost:5173 to see the bank system interface.
+---------------------------------------------------------------------------------------------------------------------------------
+
+Project screenshot
+
+https://drive.google.com/drive/folders/1gf2W2BsRZXpRG4NRcqd4N41GC8-YEuVC?usp=drive_link
+---------------------------------------------------------------------------------------------------------------------------------
+
+Author: Yaoyang Zhang
+
+GitHub: @yaoyangzhang1234894
+
+Bachelor of Science (Honors) in Computer Science, University of Ottawa
+
+Looking for entry-level positions in software development/backend engineering
